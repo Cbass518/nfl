@@ -1,0 +1,42 @@
+---
+title: "Homework Assignment 4"
+author: "Sebastian Symula"
+toc: true
+number-sections: true
+highlight-style: pygments
+format: 
+  html: 
+    code-fold: true
+    html-math-method: katex
+  pdf: 
+    geometry: 
+      - top=30mm
+      - left=20mm
+##  docx: Never, unless to accommodate a collaborator
+---
+
+# Import Packages
+
+```{python}
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+```
+
+# Read in Data
+
+```{python}
+data = pd.read_csv('pbp-2024.csv')
+```
+
+```{python}
+data['IsPenalty'].unique()
+```
+
+# Filter for only plays where there was a penalty on the offense
+
+```{python}
+flags = data[(data['IsPenalty'] == 1) & (data['PenaltyTeam'] == data['OffenseTeam'])]
+flags['IsPenalty'].value_counts()
+```
