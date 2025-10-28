@@ -24,19 +24,35 @@ import matplotlib.pyplot as plt
 
 ```
 
-# Read in Data
+## Read in Data
 
 ```{python}
 data = pd.read_csv('pbp-2024.csv')
 ```
 
+## Filter Data (return here as needed)
+
 ```{python}
-data['IsPenalty'].unique()
+flags['PenaltyType'].value_counts()
+
 ```
 
-# Filter for only plays where there was a penalty on the offense
+```{python}
+data = data[data['Down'] != 0]
+```
 
 ```{python}
-flags = data[(data['IsPenalty'] == 1) & (data['PenaltyTeam'] == data['OffenseTeam'])]
-flags['IsPenalty'].value_counts()
+data['IsPenalty'].unique()
+data_sorted = data.sort_values(by = ['GameId','Quarter','Minute','Second'], ascending = [True,True,False,False])
+```
+
+```{python}
+early_off_holding = data[(data['PenaltyType'] == 'OFFENSIVE HOLDING') & 
+((data['Down'] == 1) | (data['Down'] == 2))]
+early_off_holding['PlayType'].value_counts()
+```
+
+```{python}
+early_off_holding['IsInterception'].value_counts()
+
 ```
